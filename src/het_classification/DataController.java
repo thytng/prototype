@@ -94,9 +94,9 @@ public class DataController extends Application {
         comparePane.add(unchangedTable, 0, 0);
         comparePane.add(changedTable, 1, 0);
 
-        comparePane.add(commitButton, 0, 1);
+        comparePane.add(commitButton, 1, 1);
         GridPane.setHalignment(commitButton, HPos.CENTER);
-        comparePane.add(revertButton, 1, 1);
+        comparePane.add(revertButton, 0, 1);
         GridPane.setHalignment(revertButton, HPos.CENTER);
 
         comparePane.setVgap(10);
@@ -207,7 +207,6 @@ public class DataController extends Application {
                     if (changedData.contains(entry)) {
                         changedData.remove(entry);
                     }
-                    System.out.println(status);
                     entry.setHetClassification(status);
                     changedData.add(entry);
 
@@ -239,12 +238,9 @@ public class DataController extends Application {
     private void getDataChanges() {
         currentData = getUpdatedData();
         changedEntries = changedData.filtered(p -> !originalData.contains(p));
-        System.out.println(changedEntries.size());
 
         unchangedEntries = FXCollections.observableArrayList();
         for (DataEntry entry : changedEntries) {
-            System.out.println(entry.getId());
-            System.out.println(entry.getHetClassification());
             DataEntry newEntry = new DataEntry(entry);
             newEntry.setHetClassification(!entry.getHetClassification());
             unchangedEntries.add(newEntry);

@@ -9,7 +9,7 @@
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
     <jar href="mysql-connector-java-8.0.11.jar" size="2036609" download="eager" />
-    <jar href="prototype.jar" size="20125" download="eager" />
+    <jar href="prototype.jar" size="20046" download="eager" />
   </resources>
   <jfx:javafx-desc  width="600" height="400" main-class="het_classification.DataController"  name="prototype" />
   <update check="background"/>
