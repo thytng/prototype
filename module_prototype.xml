@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_prototype" default="compile.module.prototype">
+  <dirname property="module.prototype.basedir" file="${ant.file.module_prototype}"/>
+  
+  <property name="module.jdk.home.prototype" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.prototype" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.prototype" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.prototype" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="prototype.output.dir" value="${module.prototype.basedir}/out/production/prototype"/>
+  <property name="prototype.testoutput.dir" value="${module.prototype.basedir}/out/test/prototype"/>
+  
+  <path id="prototype.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="prototype.module.production.classpath">
+    <path refid="${module.jdk.classpath.prototype}"/>
+    <path refid="library.mysql-connector-java-8.0.classpath"/>
+  </path>
+  
+  <path id="prototype.runtime.production.module.classpath">
+    <pathelement location="${prototype.output.dir}"/>
+    <path refid="library.mysql-connector-java-8.0.classpath"/>
+  </path>
+  
+  <path id="prototype.module.classpath">
+    <path refid="${module.jdk.classpath.prototype}"/>
+    <pathelement location="${prototype.output.dir}"/>
+    <path refid="library.mysql-connector-java-8.0.classpath"/>
+  </path>
+  
+  <path id="prototype.runtime.module.classpath">
+    <pathelement location="${prototype.testoutput.dir}"/>
+    <pathelement location="${prototype.output.dir}"/>
+    <path refid="library.mysql-connector-java-8.0.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.prototype">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.prototype">
+    <patternset refid="excluded.from.module.prototype"/>
+  </patternset>
+  
+  <path id="prototype.module.sourcepath">
+    <dirset dir="${module.prototype.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.prototype" depends="compile.module.prototype.production,compile.module.prototype.tests" description="Compile module prototype"/>
+  
+  <target name="compile.module.prototype.production" depends="register.custom.compilers" description="Compile module prototype; production classes">
+    <mkdir dir="${prototype.output.dir}"/>
+    <javac2 destdir="${prototype.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.prototype}/javac">
+      <compilerarg line="${compiler.args.prototype}"/>
+      <bootclasspath refid="prototype.module.bootclasspath"/>
+      <classpath refid="prototype.module.production.classpath"/>
+      <src refid="prototype.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.prototype"/>
+    </javac2>
+    
+    <copy todir="${prototype.output.dir}">
+      <fileset dir="${module.prototype.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.prototype.tests" depends="register.custom.compilers,compile.module.prototype.production" description="compile module prototype; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.prototype" description="cleanup module">
+    <delete dir="${prototype.output.dir}"/>
+    <delete dir="${prototype.testoutput.dir}"/>
+  </target>
+</project>

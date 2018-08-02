@@ -11,8 +11,8 @@ public class DBUtil {
     private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String DB_URL = "jdbc:mysql://138.68.228.126:3306/getiriao_iaa?useSSL=false" +
             "&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&serverTimezone=America/New_York";
-    private static final String DB_USER = "getiriao_thy";
-    private static final String DB_PASS = "+jX4}*k@+^wP";
+    private static final String DB_USER = "USERNAME";
+    private static final String DB_PASS = "PASSWORD";
     private static final String DB = "sample_data";
 
     public static void connect() throws SQLException, ClassNotFoundException {
